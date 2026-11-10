@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: cognivibe_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cognivibe_user
+      POSTGRES_PASSWORD: cognivibe_password
+      POSTGRES_DB: cognivibe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: cognivibe_backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://cognivibe_user:cognivibe_password@db:5432/cognivibe_db
+      SECRET_KEY: cognivibe-super-secret-jwt-key-2026
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cognivibe_frontend
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+

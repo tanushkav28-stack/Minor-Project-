@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognivibe AI Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <span class="icon">🧠</span>
+      <div>
+        <div class="title">Cognivibe AI</div>
+        <div class="subtitle">MannSetu Screening</div>
+      </div>
+    </div>
+    <div id="status-pill" class="status-pill offline">Checking...</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-btn-analyze">Analyze</button>
+    <button class="tab-btn" id="tab-btn-settings">Settings</button>
+  </div>
+
+  <!-- TAB 1: ANALYZE -->
+  <div id="tab-analyze" class="tab-content active">
+    <div class="section-title">Manual / Quick Text Analysis</div>
+    <textarea id="input-text" placeholder="Paste Hinglish or English social post text here... e.g. 'Mujhe bhot akelapan feel hota h, kisi se baat karne ka mann nahi karta'"></textarea>
+    
+    <div class="btn-row">
+      <button id="btn-analyze" class="primary-btn">Analyze Language</button>
+      <button id="btn-scan-page" class="secondary-btn" title="Scan accessible posts on current social page">Scan Page</button>
+    </div>
+
+    <!-- Results Container -->
+    <div id="result-box" class="result-box" style="display: none;">
+      <div class="res-row">
+        <span class="res-label">Detected Emotion:</span>
+        <span id="res-emotion" class="badge">--</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">Depression-Related:</span>
+        <span id="res-depression" class="badge">--</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">Linguistic Indicator:</span>
+        <strong id="res-indicator">--</strong>
+      </div>
+      <div class="res-row">
+        <span class="res-label">Model Uncertainty:</span>
+        <span id="res-uncertainty">--</span>
+      </div>
+      <div id="res-cues" class="cues-box"></div>
+      <div id="res-helpline" class="helpline-box" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- TAB 2: SETTINGS -->
+  <div id="tab-settings" class="tab-content">
+    <div class="section-title">Extension Pairing</div>
+    <p class="help-text">Paste your personal Extension Token from the Cognivibe Web Dashboard to save your browsing analysis to your account.</p>
+    
+    <input type="text" id="token-input" placeholder="ext_..." />
+    <button id="btn-save-token" class="primary-btn" style="margin-top: 8px;">Pair Account</button>
+    <div id="pair-status" style="font-size: 11px; margin-top: 6px;"></div>
+
+    <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+      <label class="toggle-row">
+        <span>Enable On-Page Scanner</span>
+        <input type="checkbox" id="toggle-scanner" checked>
+      </label>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="http://localhost:5173" target="_blank" class="footer-link">Open Full Web Dashboard ↗</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+

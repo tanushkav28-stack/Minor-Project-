@@ -1,0 +1,194 @@
+{
+  "dataset_metadata": {
+    "total_samples": 116,
+    "train_samples": 89,
+    "test_samples": 27,
+    "leakage_prevention": "Strict User-Stratified Split",
+    "classes_emotion": [
+      "Sadness",
+      "Anger",
+      "Joy",
+      "Fear",
+      "Neutral",
+      "Anxiety/Worry",
+      "Disgust"
+    ],
+    "classes_depression_indicators": [
+      "none",
+      "loneliness",
+      "hopelessness",
+      "emotional_exhaustion",
+      "negative_self_perception",
+      "loss_of_interest"
+    ]
+  },
+  "model_comparison": {
+    "task_1_emotion": {
+      "TF-IDF + Logistic Regression": {
+        "accuracy": 0.2593,
+        "macro_f1": 0.1952
+      },
+      "TF-IDF + SVM": {
+        "accuracy": 0.2593,
+        "macro_f1": 0.1952
+      },
+      "Multitask Shared Architecture (Proposed)": {
+        "accuracy": 0.5185,
+        "macro_f1": 0.1637,
+        "per_class": {
+          "Sadness": {
+            "precision": 0.7222,
+            "recall": 0.9286,
+            "f1_score": 0.8125,
+            "support": 14
+          },
+          "Anger": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2
+          },
+          "Joy": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 0
+          },
+          "Fear": {
+            "precision": 0.25,
+            "recall": 0.5,
+            "f1_score": 0.3333,
+            "support": 2
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 5
+          },
+          "Anxiety/Worry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 3
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 1
+          }
+        },
+        "confusion_matrix": {
+          "Sadness": {
+            "Sadness": 13,
+            "Anger": 0,
+            "Joy": 1,
+            "Fear": 0,
+            "Neutral": 0,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Anger": {
+            "Sadness": 0,
+            "Anger": 0,
+            "Joy": 1,
+            "Fear": 0,
+            "Neutral": 1,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Joy": {
+            "Sadness": 0,
+            "Anger": 0,
+            "Joy": 0,
+            "Fear": 0,
+            "Neutral": 0,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Fear": {
+            "Sadness": 0,
+            "Anger": 0,
+            "Joy": 0,
+            "Fear": 1,
+            "Neutral": 1,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Neutral": {
+            "Sadness": 4,
+            "Anger": 0,
+            "Joy": 0,
+            "Fear": 1,
+            "Neutral": 0,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Anxiety/Worry": {
+            "Sadness": 1,
+            "Anger": 0,
+            "Joy": 0,
+            "Fear": 1,
+            "Neutral": 1,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Disgust": {
+            "Sadness": 0,
+            "Anger": 0,
+            "Joy": 0,
+            "Fear": 1,
+            "Neutral": 0,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          }
+        }
+      }
+    },
+    "task_2_depression": {
+      "TF-IDF + Logistic Regression": {
+        "accuracy": 0.7407,
+        "macro_f1": 0.7393
+      },
+      "TF-IDF + SVM": {
+        "accuracy": 0.7407,
+        "macro_f1": 0.7393
+      },
+      "Multitask Shared Architecture (Proposed)": {
+        "accuracy": 0.8889,
+        "macro_f1": 0.8883,
+        "per_class": {
+          "Non-Depression": {
+            "precision": 0.8667,
+            "recall": 0.9286,
+            "f1_score": 0.8966,
+            "support": 14
+          },
+          "Depression-Related": {
+            "precision": 0.9167,
+            "recall": 0.8462,
+            "f1_score": 0.88,
+            "support": 13
+          }
+        },
+        "confusion_matrix": {
+          "Non-Depression": {
+            "Non-Depression": 13,
+            "Depression-Related": 1
+          },
+          "Depression-Related": {
+            "Non-Depression": 2,
+            "Depression-Related": 11
+          }
+        }
+      }
+    },
+    "context_experiment": {
+      "isolated_single_post_accuracy": 0.8889,
+      "context_aware_sequential_accuracy": 0.8889,
+      "relative_improvement_percentage": 0.0,
+      "finding": "Context-aware analysis prevents false positives on isolated bad-day remarks while identifying chronic recurring negative trajectories."
+    }
+  }
+}

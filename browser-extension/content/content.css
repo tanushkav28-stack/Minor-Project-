@@ -1,0 +1,205 @@
+/* Cognivibe AI - Content Script Injected Styles */
+
+#cognivibe-floating-btn {
+  position: absolute;
+  z-index: 2147483640;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1e3a8a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.35);
+  border: 1px solid #3b82f6;
+  transition: all 0.2s ease;
+}
+
+#cognivibe-floating-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.cognivibe-inline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  margin: 6px 0;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background 0.15s ease;
+}
+
+.cognivibe-inline-btn:hover {
+  background: #dbeafe;
+}
+
+/* Modal Overlay */
+#cognivibe-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 2147483645;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.cognivibe-modal-card {
+  background: #ffffff;
+  width: 480px;
+  max-width: 90vw;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  animation: cognivibeFadeIn 0.2s ease-out;
+}
+
+@keyframes cognivibeFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.cognivibe-modal-header {
+  background: #f8fafc;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cognivibe-modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cognivibe-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cognivibe-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.cognivibe-modal-body {
+  padding: 18px;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.cognivibe-quote-box {
+  background: #f1f5f9;
+  border-left: 3px solid #3b82f6;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #334155;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 16px;
+  font-style: italic;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.cognivibe-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cognivibe-result-tile {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.cognivibe-tile-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cognivibe-badge-pill {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.badge-sadness { background: #fee2e2; color: #991b1b; }
+.badge-joy { background: #dcfce7; color: #166534; }
+.badge-anger { background: #ffedd5; color: #9a3412; }
+.badge-anxiety { background: #fef3c7; color: #854d0e; }
+.badge-neutral { background: #f1f5f9; color: #475569; }
+.badge-fear { background: #ede9fe; color: #5b21b6; }
+.badge-disgust { background: #fae8ff; color: #86198f; }
+
+.cognivibe-crisis-alert {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: #991b1b;
+}
+
+.cognivibe-helpline-list {
+  margin-top: 6px;
+  padding-left: 16px;
+}
+
+.cognivibe-modal-footer {
+  padding: 12px 18px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cognivibe-link-btn {
+  font-size: 12px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cognivibe-link-btn:hover {
+  text-decoration: underline;
+}
+
