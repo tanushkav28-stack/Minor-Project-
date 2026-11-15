@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Cognivibe AI - Mental Health Language Screening",
+  "name": "Cognivibe AI - Mindful Language & Wellbeing Assistant",
   "version": "2.0.0",
-  "description": "A context-aware, multitask AI extension for analyzing emotion and depression-related language in Hinglish & English social media content.",
+  "description": "A context-aware, multitask AI extension for analyzing emotion and wellbeing cues in Hinglish & English social media content.",
   "permissions": [
     "storage",
-    "activeTab",
-    "contextMenus"
+    "activeTab"
   ],
   "host_permissions": [
     "http://localhost:8000/*",
@@ -30,7 +29,8 @@
         "adapters/twitter.js",
         "adapters/instagram.js",
         "adapters/youtube.js",
-        "content/content.js"
+        "content/content.js",
+        "content/consumption-tracker.js"
       ],
       "css": [
         "content/content.css"

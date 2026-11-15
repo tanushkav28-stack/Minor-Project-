@@ -3,8 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
-    @apply antialiased font-sans text-slate-800 bg-slate-50;
+    @apply antialiased font-sans text-[#244B43] bg-[#F8F6F0];
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(233, 240, 231, 0.8) 0px, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(217, 233, 229, 0.6) 0px, transparent 55%),
+      radial-gradient(at 50% 100%, rgba(232, 216, 204, 0.45) 0px, transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: #D9E9E5;
+    color: #244B43;
   }
 }
 
+/* Custom subtle scrollbar in soft sage and eucalyptus */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F6F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C2D6C9;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A9C4B2;
+}

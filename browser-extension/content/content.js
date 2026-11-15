@@ -1,56 +1,18 @@
 /**
- * Cognivibe AI - Content Script (Optimized for instant < 0.1s response with context-invalidation guard)
+ * Cognivibe AI - Passive Ambient Content Script
+ * Runs completely in the background without intrusive text selection popups.
  */
 
 (function () {
-  let floatingBtn = null;
-  let selectedText = '';
-
   function isExtensionValid() {
     return typeof chrome !== 'undefined' && chrome.runtime && !!chrome.runtime.id;
   }
 
-  // 1. Text selection listener
-  document.addEventListener('mouseup', function (e) {
-    if (e.target.closest('#cognivibe-floating-btn') || e.target.closest('#cognivibe-modal-overlay')) {
-      return;
-    }
+  // 1. Text selection listener removed:
+  // Cognivibe AI observes pages ambiently via consumption-tracker.js.
+  // No floating button pops up on text highlight.
 
-    const selection = window.getSelection().toString().trim();
-    if (selection.length > 5) {
-      selectedText = selection;
-      showFloatingButton(e.pageX, e.pageY);
-    } else {
-      hideFloatingButton();
-    }
-  });
-
-  function showFloatingButton(x, y) {
-    if (!floatingBtn) {
-      floatingBtn = document.createElement('div');
-      floatingBtn.id = 'cognivibe-floating-btn';
-      floatingBtn.innerHTML = '<span>🧠</span> Analyze with Cognivibe';
-      document.body.appendChild(floatingBtn);
-
-      floatingBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        hideFloatingButton();
-        analyzeSelectedContent(selectedText, 'selection');
-      });
-    }
-
-    floatingBtn.style.top = `${y + 12}px`;
-    floatingBtn.style.left = `${Math.min(x + 10, window.innerWidth - 200)}px`;
-    floatingBtn.style.display = 'flex';
-  }
-
-  function hideFloatingButton() {
-    if (floatingBtn) {
-      floatingBtn.style.display = 'none';
-    }
-  }
-
-  // Right-click context menu message receiver
+  // Right-click context menu message receiver (if user explicitly chooses context menu)
   if (isExtensionValid()) {
     try {
       chrome.runtime.onMessage.addListener((msg) => {
@@ -61,39 +23,9 @@
     } catch (e) {}
   }
 
-  // 2. Active platform adapters
+  // 2. Active platform adapters (passive extraction handled by consumption-tracker.js)
   function initAdapters() {
-    let adapter = null;
-    if (window.CognivibeRedditAdapter && window.CognivibeRedditAdapter.isMatch()) {
-      adapter = window.CognivibeRedditAdapter;
-    } else if (window.CognivibeTwitterAdapter && window.CognivibeTwitterAdapter.isMatch()) {
-      adapter = window.CognivibeTwitterAdapter;
-    } else if (window.CognivibeInstagramAdapter && window.CognivibeInstagramAdapter.isMatch()) {
-      adapter = window.CognivibeInstagramAdapter;
-    } else if (window.CognivibeYouTubeAdapter && window.CognivibeYouTubeAdapter.isMatch()) {
-      adapter = window.CognivibeYouTubeAdapter;
-    }
-
-    if (!adapter) return;
-
-    setInterval(() => {
-      try {
-        const posts = adapter.extractPosts();
-        posts.forEach(post => {
-          if (!post.element.querySelector('.cognivibe-inline-btn')) {
-            const btn = document.createElement('button');
-            btn.className = 'cognivibe-inline-btn';
-            btn.innerHTML = '🧠 Analyze Post';
-            btn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              analyzeSelectedContent(post.text, adapter.platform);
-            });
-            post.element.appendChild(btn);
-          }
-        });
-      } catch (err) {}
-    }, 2500);
+    // Kept clean without intrusive inline buttons
   }
 
   // 3. Fast API Proxy via Background Service Worker
@@ -211,7 +143,7 @@
       <div class="cognivibe-modal-card">
         <div class="cognivibe-modal-header">
           <div class="cognivibe-modal-title">
-            <span>🧠</span> Cognivibe AI Linguistic Screening
+            <span>✨</span> Cognivibe AI Linguistic Screening
           </div>
           <button class="cognivibe-close-btn" id="cognivibe-close-modal">✕</button>
         </div>

@@ -5,7 +5,7 @@ Cognivibe AI - Application Configuration
 import os
 
 class Settings:
-    PROJECT_NAME: str = "Cognivibe AI (MannSetu AI)"
+    PROJECT_NAME: str = "Cognivibe AI"
     VERSION: str = "2.0.0"
     API_V1_PREFIX: str = "/api"
     

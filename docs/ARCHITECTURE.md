@@ -1,4 +1,4 @@
-# Cognivibe AI (MannSetu AI) - System Architecture Document
+# Cognivibe AI - System Architecture Document
 ### A Context-Aware, Multitask AI System for Mental Health Language Analysis in Code-Mixed Social Media Content
 
 ---

@@ -1,4 +1,4 @@
-# Cognivibe AI (MannSetu AI) - Final Year B.Tech Viva Preparation Guide
+# Cognivibe AI - Final Year B.Tech Viva Preparation Guide
 
 This guide prepares you for common and challenging technical questions asked by external examiners, project coordinators, and industry evaluators.
 

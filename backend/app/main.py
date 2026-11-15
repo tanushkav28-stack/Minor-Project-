@@ -21,12 +21,13 @@ try:
         dashboard as dashboard_routes,
         reports as reports_routes,
         extension as extension_routes,
-        users as users_routes
+        users as users_routes,
+        consumption as consumption_routes
     )
 
     app = FastAPI(
-        title="Cognivibe AI (MannSetu AI) API",
-        description="A Context-Aware, Multitask AI System for Mental Health Language Analysis in Code-Mixed Hinglish Content",
+        title="Cognivibe AI API",
+        description="Mindful Language & Emotional Wellbeing Intelligence in Code-Mixed Hinglish Content",
         version="2.0.0"
     )
 
@@ -222,6 +223,62 @@ try:
     @app.delete("/api/users/account")
     async def delete_account(user: Optional[Dict[str, Any]] = Depends(get_current_user)):
         code, res = users_routes.handle_delete_account(user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    # Digital Consumption & Mood Intelligence Endpoints
+    @app.post("/api/consumption/log")
+    async def log_consumption(request: Request, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        body = await request.json()
+        code, res = consumption_routes.handle_log_consumption(body, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.get("/api/consumption/daily-report")
+    async def get_daily_report(request: Request, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        query = {k: [v] for k, v in request.query_params.items()}
+        code, res = consumption_routes.handle_get_daily_report(query, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.get("/api/consumption/weekly-report")
+    async def get_weekly_report(request: Request, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        query = {k: [v] for k, v in request.query_params.items()}
+        code, res = consumption_routes.handle_get_weekly_report(query, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.post("/api/consumption/mood-checkin")
+    async def mood_checkin(request: Request, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        body = await request.json()
+        code, res = consumption_routes.handle_mood_checkin(body, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.get("/api/consumption/mood-history")
+    async def get_mood_history(request: Request, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        query = {k: [v] for k, v in request.query_params.items()}
+        code, res = consumption_routes.handle_get_mood_history(query, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.post("/api/consumption/classify")
+    async def classify_content(request: Request):
+        body = await request.json()
+        code, res = consumption_routes.handle_classify_content(body)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
+
+    @app.delete("/api/consumption/clear")
+    async def clear_consumption(user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        code, res = consumption_routes.handle_clear_consumption(user)
         if code >= 400:
             raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
         return res

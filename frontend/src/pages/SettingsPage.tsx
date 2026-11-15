@@ -72,10 +72,10 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-6">
-        <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
-          <Settings className="w-4 h-4" />
-          <span>Account & Security</span>
+      <div className="border-b border-sky-100 pb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-xs font-bold text-sky-700 uppercase tracking-wider mb-1">
+          <Settings className="w-3.5 h-3.5 text-sky-600" />
+          <span>Cognivibe Account & Security</span>
         </div>
         <h1 className="text-3xl font-black text-slate-900 mt-1">Profile & Privacy Preferences</h1>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -84,20 +84,20 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* BROWSER EXTENSION PAIRING TOKEN */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg space-y-4">
+      <div className="bg-gradient-to-r from-[#0c2340] via-[#0f3460] to-[#091f3a] text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-4 border border-sky-500/20">
         <div className="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider">
-          <Chrome className="w-4 h-4" />
+          <Chrome className="w-4 h-4 text-sky-300" />
           <span>Chrome & Edge Browser Extension Pairing</span>
         </div>
-        <h2 className="text-xl font-extrabold">Your Extension API Token</h2>
-        <p className="text-xs text-blue-200 leading-relaxed max-w-xl">
+        <h2 className="text-xl font-extrabold text-white">Your Extension API Token</h2>
+        <p className="text-xs text-sky-100/80 leading-relaxed max-w-xl">
           Paste this token inside the Cognivibe Extension Popup (Settings tab) to synchronize your browsing post analyses directly to your personal research dashboard.
         </p>
-        <div className="flex items-center gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-blue-400/30 font-mono text-xs max-w-lg">
+        <div className="flex items-center gap-2 bg-slate-950/70 p-2.5 rounded-2xl border border-sky-400/30 font-mono text-xs max-w-lg">
           <span className="truncate flex-1 text-sky-200">{user?.extension_token || 'ext_demo_token_key'}</span>
           <button
             onClick={handleCopyToken}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-sans font-bold text-xs transition-colors shrink-0"
+            className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-600 hover:to-teal-600 text-white rounded-xl font-sans font-bold text-xs transition-colors shrink-0"
           >
             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? 'Copied!' : 'Copy Token'}</span>
@@ -106,7 +106,7 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* USER PROFILE CARD */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+      <div className="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-sky-100 shadow-[0_4px_20px_-4px_rgba(14,165,233,0.08)] space-y-4">
         <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
           <User className="w-4 h-4 text-blue-600" />
           <span>User Profile</span>
@@ -186,7 +186,7 @@ export const SettingsPage: React.FC = () => {
         <button
           onClick={handleSavePrivacy}
           disabled={savingPrivacy}
-          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all"
+          className="px-6 py-2.5 bg-gradient-to-r from-sky-500 via-sky-600 to-teal-500 hover:from-sky-600 hover:to-teal-600 text-white font-bold text-xs rounded-2xl shadow-sm shadow-sky-500/20 transition-all hover:scale-105 active:scale-95"
         >
           {savingPrivacy ? 'Saving...' : 'Save Privacy Preferences'}
         </button>

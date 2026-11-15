@@ -87,8 +87,43 @@ CREATE TABLE IF NOT EXISTS extension_connections (
     FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+-- Digital Consumption & Mood Intelligence Tracker Schema
+CREATE TABLE IF NOT EXISTS consumption_logs (
+    log_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    url TEXT,
+    domain TEXT,
+    platform TEXT DEFAULT 'Web',
+    category TEXT DEFAULT 'Other',
+    title TEXT,
+    content_snippet TEXT,
+    emotional_tone TEXT DEFAULT 'neutral', -- positive, neutral, negative, mixed
+    topic TEXT DEFAULT 'General',
+    emotional_intensity TEXT DEFAULT 'medium', -- low, medium, high
+    is_distressing INTEGER DEFAULT 0,
+    distressing_theme TEXT DEFAULT 'none',
+    constructiveness TEXT DEFAULT 'informative', -- informative, supportive, harmful, uplifting, unclear
+    time_spent_seconds INTEGER DEFAULT 0,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TEXT NOT NULL, -- YYYY-MM-DD
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS mood_checkins (
+    checkin_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    mood TEXT NOT NULL, -- happy, calm, neutral, stressed, sad, anxious
+    mood_score INTEGER NOT NULL, -- 1 (sad), 2 (stressed/anxious), 3 (neutral), 4 (calm), 5 (happy)
+    note TEXT,
+    checkin_date TEXT NOT NULL, -- YYYY-MM-DD
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_analysis_user_id ON analysis_history(user_id);
 CREATE INDEX IF NOT EXISTS idx_analysis_created_at ON analysis_history(created_at);
+CREATE INDEX IF NOT EXISTS idx_consumption_user_date ON consumption_logs(user_id, date);
+CREATE INDEX IF NOT EXISTS idx_mood_user_date ON mood_checkins(user_id, checkin_date);
 """
 

@@ -6,12 +6,6 @@
 const BACKEND_URL = 'http://127.0.0.1:8000/api';
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: 'cognivibe-analyze-selection',
-    title: '🧠 Analyze with Cognivibe AI',
-    contexts: ['selection']
-  });
-
   chrome.storage.sync.get(['cognivibe_enabled'], (res) => {
     if (res.cognivibe_enabled === undefined) {
       chrome.storage.sync.set({ cognivibe_enabled: true });
@@ -19,16 +13,6 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   console.log('Cognivibe AI Background Worker initialized.');
-});
-
-// Context menu click listener
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === 'cognivibe-analyze-selection' && tab && tab.id) {
-    chrome.tabs.sendMessage(tab.id, {
-      action: 'analyze_selection',
-      text: info.selectionText
-    });
-  }
 });
 
 // Fast message proxy listener for content script & popup
@@ -66,5 +50,102 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
 
     return true; // Keep message channel open for async fetch
+  }
+
+  // 2. Digital Consumption Logging & Live Page Analysis Proxy
+  if (request.action === 'log_consumption') {
+    chrome.storage.sync.get(['cognivibe_token'], async (res) => {
+      const token = res.cognivibe_token || '';
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      if (token) {
+        headers['X-Extension-Token'] = token;
+      }
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/consumption/log`, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(request.payload)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          sendResponse({ success: true, data: data });
+        } else {
+          sendResponse({ success: false, status: response.status });
+        }
+      } catch (err) {
+        sendResponse({ success: false, error: 'Backend unreachable' });
+      }
+    });
+
+    return true;
+  }
+
+  // 3. Quick Mood Check-in Proxy
+  if (request.action === 'mood_checkin') {
+    chrome.storage.sync.get(['cognivibe_token'], async (res) => {
+      const token = res.cognivibe_token || '';
+      if (!token) {
+        sendResponse({ success: false, error: 'Extension not paired with token.' });
+        return;
+      }
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/consumption/mood-checkin`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Extension-Token': token
+          },
+          body: JSON.stringify({
+            mood: request.mood,
+            note: request.note || 'Logged via Chrome extension quick popup'
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          sendResponse({ success: true, data: data });
+        } else {
+          sendResponse({ success: false, status: response.status });
+        }
+      } catch (err) {
+        sendResponse({ success: false, error: 'Backend unreachable' });
+      }
+    });
+
+    return true;
+  }
+
+  // 4. Get Today's Consumption Summary
+  if (request.action === 'get_today_summary') {
+    chrome.storage.sync.get(['cognivibe_token'], async (res) => {
+      const token = res.cognivibe_token || '';
+      if (!token) {
+        sendResponse({ success: false, error: 'Not paired' });
+        return;
+      }
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/consumption/daily-report`, {
+          headers: {
+            'X-Extension-Token': token
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          sendResponse({ success: true, data: data });
+        } else {
+          sendResponse({ success: false });
+        }
+      } catch (err) {
+        sendResponse({ success: false, error: 'Backend unreachable' });
+      }
+    });
+
+    return true;
   }
 });

@@ -1,7 +1,9 @@
+import { DailyReportResponse, WeeklyReportResponse } from '../types';
+
 const API_BASE = '/api';
 
 export function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem('cognivibe_auth_token');
+  const token = localStorage.getItem('aura_auth_token') || localStorage.getItem('cognivibe_auth_token');
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
   };
@@ -154,6 +156,49 @@ export const api = {
       headers: getAuthHeaders()
     });
     if (!res.ok) throw new Error('Failed to delete account');
+    return res.json();
+  },
+
+  // Digital Consumption & Mood Intelligence
+  async getDailyReport(date?: string): Promise<DailyReportResponse> {
+    const query = date ? `?date=${date}` : '';
+    const res = await fetch(`${API_BASE}/consumption/daily-report${query}`, {
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) throw new Error('Failed to fetch daily report');
+    return res.json();
+  },
+
+  async getWeeklyReport(startDate?: string, endDate?: string): Promise<WeeklyReportResponse> {
+    let query = '';
+    const params = new URLSearchParams();
+    if (startDate) params.append('start_date', startDate);
+    if (endDate) params.append('end_date', endDate);
+    if (params.toString()) query = `?${params.toString()}`;
+
+    const res = await fetch(`${API_BASE}/consumption/weekly-report${query}`, {
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) throw new Error('Failed to fetch weekly report');
+    return res.json();
+  },
+
+  async recordMoodCheckin(payload: { mood: string; note?: string; date?: string }) {
+    const res = await fetch(`${API_BASE}/consumption/mood-checkin`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('Failed to record mood check-in');
+    return res.json();
+  },
+
+  async clearConsumptionLogs() {
+    const res = await fetch(`${API_BASE}/consumption/clear`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) throw new Error('Failed to clear consumption logs');
     return res.json();
   }
 };

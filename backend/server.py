@@ -1,5 +1,5 @@
 """
-Cognivibe AI (MannSetu AI) - High-Performance Backend Server Runner
+Cognivibe AI - High-Performance Backend Server Runner
 Optimized for ultra-low latency (< 50ms) on Windows:
 - Bypasses reverse DNS lookups (address_string override)
 - Disables Nagle's algorithm (TCP_NODELAY)
@@ -28,7 +28,8 @@ from backend.app.api.routes import (
     dashboard as dashboard_routes,
     reports as reports_routes,
     extension as extension_routes,
-    users as users_routes
+    users as users_routes,
+    consumption as consumption_routes
 )
 
 
@@ -106,7 +107,7 @@ class CognivibeRequestHandler(BaseHTTPRequestHandler):
 
         if path == "/" or path == "/api":
             return self._send_json_response(200, {
-                "name": "Cognivibe AI (MannSetu) API",
+                "name": "Cognivibe AI API",
                 "version": "2.0.0",
                 "status": "online",
                 "architecture": "Multitask Shared Representation Engine",
@@ -156,6 +157,18 @@ class CognivibeRequestHandler(BaseHTTPRequestHandler):
             code, res = users_routes.handle_get_privacy(user)
             return self._send_json_response(code, res)
 
+        elif path == "/api/consumption/daily-report":
+            code, res = consumption_routes.handle_get_daily_report(query, user)
+            return self._send_json_response(code, res)
+
+        elif path == "/api/consumption/weekly-report":
+            code, res = consumption_routes.handle_get_weekly_report(query, user)
+            return self._send_json_response(code, res)
+
+        elif path == "/api/consumption/mood-history":
+            code, res = consumption_routes.handle_get_mood_history(query, user)
+            return self._send_json_response(code, res)
+
         else:
             return self._send_json_response(404, {"detail": f"Path not found: {path}"})
 
@@ -196,6 +209,18 @@ class CognivibeRequestHandler(BaseHTTPRequestHandler):
             code, res = extension_routes.handle_extension_analyze(body, user)
             return self._send_json_response(code, res)
 
+        elif path == "/api/consumption/log":
+            code, res = consumption_routes.handle_log_consumption(body, user)
+            return self._send_json_response(code, res)
+
+        elif path == "/api/consumption/mood-checkin":
+            code, res = consumption_routes.handle_mood_checkin(body, user)
+            return self._send_json_response(code, res)
+
+        elif path == "/api/consumption/classify":
+            code, res = consumption_routes.handle_classify_content(body)
+            return self._send_json_response(code, res)
+
         else:
             return self._send_json_response(404, {"detail": f"Path not found: {path}"})
 
@@ -230,6 +255,10 @@ class CognivibeRequestHandler(BaseHTTPRequestHandler):
 
         elif path == "/api/users/account":
             code, res = users_routes.handle_delete_account(user)
+            return self._send_json_response(code, res)
+
+        elif path == "/api/consumption/clear":
+            code, res = consumption_routes.handle_clear_consumption(user)
             return self._send_json_response(code, res)
 
         else:

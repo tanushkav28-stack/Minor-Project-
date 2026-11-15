@@ -1,8 +1,8 @@
 {
   "dataset_metadata": {
     "total_samples": 116,
-    "train_samples": 89,
-    "test_samples": 27,
+    "train_samples": 88,
+    "test_samples": 28,
     "leakage_prevention": "Strict User-Stratified Split",
     "classes_emotion": [
       "Sadness",
@@ -25,81 +25,81 @@
   "model_comparison": {
     "task_1_emotion": {
       "TF-IDF + Logistic Regression": {
-        "accuracy": 0.2593,
-        "macro_f1": 0.1952
+        "accuracy": 0.3214,
+        "macro_f1": 0.1774
       },
       "TF-IDF + SVM": {
-        "accuracy": 0.2593,
-        "macro_f1": 0.1952
+        "accuracy": 0.3214,
+        "macro_f1": 0.1774
       },
       "Multitask Shared Architecture (Proposed)": {
-        "accuracy": 0.5185,
-        "macro_f1": 0.1637,
+        "accuracy": 0.5714,
+        "macro_f1": 0.1515,
         "per_class": {
           "Sadness": {
-            "precision": 0.7222,
-            "recall": 0.9286,
-            "f1_score": 0.8125,
-            "support": 14
+            "precision": 0.75,
+            "recall": 0.8824,
+            "f1_score": 0.8108,
+            "support": 17
           },
           "Anger": {
             "precision": 0.0,
             "recall": 0.0,
             "f1_score": 0.0,
-            "support": 2
+            "support": 1
           },
           "Joy": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 2
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "support": 4
+          },
+          "Neutral": {
+            "precision": 0.1667,
+            "recall": 0.5,
+            "f1_score": 0.25,
+            "support": 2
+          },
+          "Anxiety/Worry": {
             "precision": 0.0,
             "recall": 0.0,
             "f1_score": 0.0,
             "support": 0
           },
-          "Fear": {
-            "precision": 0.25,
-            "recall": 0.5,
-            "f1_score": 0.3333,
-            "support": 2
-          },
-          "Neutral": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1_score": 0.0,
-            "support": 5
-          },
-          "Anxiety/Worry": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1_score": 0.0,
-            "support": 3
-          },
           "Disgust": {
             "precision": 0.0,
             "recall": 0.0,
             "f1_score": 0.0,
-            "support": 1
+            "support": 2
           }
         },
         "confusion_matrix": {
           "Sadness": {
-            "Sadness": 13,
+            "Sadness": 15,
             "Anger": 0,
-            "Joy": 1,
+            "Joy": 0,
+            "Fear": 0,
+            "Neutral": 2,
+            "Anxiety/Worry": 0,
+            "Disgust": 0
+          },
+          "Anger": {
+            "Sadness": 1,
+            "Anger": 0,
+            "Joy": 0,
             "Fear": 0,
             "Neutral": 0,
             "Anxiety/Worry": 0,
             "Disgust": 0
           },
-          "Anger": {
-            "Sadness": 0,
-            "Anger": 0,
-            "Joy": 1,
-            "Fear": 0,
-            "Neutral": 1,
-            "Anxiety/Worry": 0,
-            "Disgust": 0
-          },
           "Joy": {
-            "Sadness": 0,
+            "Sadness": 2,
             "Anger": 0,
             "Joy": 0,
             "Fear": 0,
@@ -108,38 +108,38 @@
             "Disgust": 0
           },
           "Fear": {
-            "Sadness": 0,
+            "Sadness": 1,
             "Anger": 0,
             "Joy": 0,
-            "Fear": 1,
-            "Neutral": 1,
+            "Fear": 0,
+            "Neutral": 2,
             "Anxiety/Worry": 0,
-            "Disgust": 0
+            "Disgust": 1
           },
           "Neutral": {
-            "Sadness": 4,
+            "Sadness": 1,
             "Anger": 0,
             "Joy": 0,
-            "Fear": 1,
-            "Neutral": 0,
+            "Fear": 0,
+            "Neutral": 1,
             "Anxiety/Worry": 0,
             "Disgust": 0
           },
           "Anxiety/Worry": {
-            "Sadness": 1,
+            "Sadness": 0,
             "Anger": 0,
             "Joy": 0,
-            "Fear": 1,
-            "Neutral": 1,
+            "Fear": 0,
+            "Neutral": 0,
             "Anxiety/Worry": 0,
             "Disgust": 0
           },
           "Disgust": {
             "Sadness": 0,
-            "Anger": 0,
+            "Anger": 1,
             "Joy": 0,
-            "Fear": 1,
-            "Neutral": 0,
+            "Fear": 0,
+            "Neutral": 1,
             "Anxiety/Worry": 0,
             "Disgust": 0
           }
@@ -148,45 +148,45 @@
     },
     "task_2_depression": {
       "TF-IDF + Logistic Regression": {
-        "accuracy": 0.7407,
-        "macro_f1": 0.7393
+        "accuracy": 0.8571,
+        "macro_f1": 0.8564
       },
       "TF-IDF + SVM": {
-        "accuracy": 0.7407,
-        "macro_f1": 0.7393
+        "accuracy": 0.8571,
+        "macro_f1": 0.8564
       },
       "Multitask Shared Architecture (Proposed)": {
-        "accuracy": 0.8889,
-        "macro_f1": 0.8883,
+        "accuracy": 0.7857,
+        "macro_f1": 0.7846,
         "per_class": {
           "Non-Depression": {
-            "precision": 0.8667,
-            "recall": 0.9286,
-            "f1_score": 0.8966,
-            "support": 14
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1_score": 0.8,
+            "support": 12
           },
           "Depression-Related": {
-            "precision": 0.9167,
-            "recall": 0.8462,
-            "f1_score": 0.88,
-            "support": 13
+            "precision": 1.0,
+            "recall": 0.625,
+            "f1_score": 0.7692,
+            "support": 16
           }
         },
         "confusion_matrix": {
           "Non-Depression": {
-            "Non-Depression": 13,
-            "Depression-Related": 1
+            "Non-Depression": 12,
+            "Depression-Related": 0
           },
           "Depression-Related": {
-            "Non-Depression": 2,
-            "Depression-Related": 11
+            "Non-Depression": 6,
+            "Depression-Related": 10
           }
         }
       }
     },
     "context_experiment": {
-      "isolated_single_post_accuracy": 0.8889,
-      "context_aware_sequential_accuracy": 0.8889,
+      "isolated_single_post_accuracy": 0.7857,
+      "context_aware_sequential_accuracy": 0.7857,
       "relative_improvement_percentage": 0.0,
       "finding": "Context-aware analysis prevents false positives on isolated bad-day remarks while identifying chronic recurring negative trajectories."
     }

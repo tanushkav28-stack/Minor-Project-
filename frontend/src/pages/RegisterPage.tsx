@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Brain, UserPlus } from 'lucide-react';
+import { Sparkles, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 
@@ -31,55 +31,55 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl">
+      <div className="max-w-md w-full space-y-7 bg-white/95 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-sky-100 shadow-[0_10px_40px_-10px_rgba(14,165,233,0.15)]">
         <div className="text-center">
-          <div className="w-12 h-12 bg-blue-600 text-white rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-blue-500/20 mb-3">
-            <Brain className="w-6 h-6" />
+          <div className="w-12 h-12 bg-gradient-to-tr from-sky-500 via-sky-400 to-teal-400 text-white rounded-2xl mx-auto flex items-center justify-center shadow-lg shadow-sky-500/25 mb-3.5">
+            <Sparkles className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900">Create Account</h2>
-          <p className="text-xs text-slate-500 mt-1">Join Cognivibe AI for research screening & analysis</p>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Create Account</h2>
+          <p className="text-xs text-sky-800/80 mt-1 font-medium">Join Cognivibe AI for research screening & analysis</p>
         </div>
 
         {error && (
-          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl">
+          <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-2xl">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1.5">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="e.g. Priyanshu Verma"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-2xl border border-sky-200 text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-sky-50/20"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Email Address</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1.5">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="name@university.edu"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-2xl border border-sky-200 text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-sky-50/20"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Password</label>
+            <label className="text-xs font-bold text-slate-700 block mb-1.5">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="At least 6 characters"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              className="w-full px-4 py-3 rounded-2xl border border-sky-200 text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-sky-50/20"
             />
           </div>
 
@@ -90,20 +90,20 @@ export const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all disabled:opacity-50 text-sm"
+            className="w-full py-3.5 px-4 bg-gradient-to-r from-sky-500 via-sky-600 to-teal-500 hover:from-sky-600 hover:to-teal-600 text-white font-bold rounded-2xl shadow-md shadow-sky-500/25 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 text-sm flex items-center justify-center gap-2"
           >
-            {loading ? 'Creating Account...' : 'Register'}
+            <UserPlus className="w-4 h-4" />
+            <span>{loading ? 'Creating Account...' : 'Get Started'}</span>
           </button>
         </form>
 
         <div className="text-center text-xs text-slate-500">
           Already have an account?{' '}
-          <Link to="/login" className="font-bold text-blue-600 hover:underline">
-            Sign in
+          <Link to="/login" className="font-bold text-sky-600 hover:text-sky-700 hover:underline">
+            Log in here
           </Link>
         </div>
       </div>
     </div>
   );
 };
-

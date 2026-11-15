@@ -50,6 +50,9 @@ def handle_login(body: Dict[str, Any]) -> Tuple[int, Dict[str, Any]]:
         return 400, {"detail": "Email and password are required."}
 
     user = DatabaseService.get_user_by_email(email)
+    if not user and email in ("demo@aura.health", "demo@aura.ai"):
+        user = DatabaseService.get_user_by_email("demo@cognivibe.ai")
+
     if not user:
         return 401, {"detail": "Invalid email or password."}
 

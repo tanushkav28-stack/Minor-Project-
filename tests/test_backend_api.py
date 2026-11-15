@@ -15,7 +15,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from backend.app.api.routes import auth, analysis, dashboard, reports, extension, users
+from backend.app.api.routes import auth, analysis, dashboard, reports, extension, users, consumption
 from backend.app.database.session import DatabaseService
 
 
@@ -80,8 +80,41 @@ def run_tests():
     assert "Cognivibe AI" in html
     print(f"✓ Report Generation passed (Report ID: {rep_id})")
 
+    # 7. Test Digital Consumption Logging & Classification
+    code, log_res = consumption.handle_log_consumption({
+        "title": "Inspiring tech breakthroughs in clean energy",
+        "text": "Scientists announce major milestone in sustainable fusion energy today. Inspiring achievement!",
+        "domain": "bbc.com",
+        "time_spent_seconds": 120
+    }, current_user)
+    assert code == 201
+    assert log_res["logged"] is True
+    assert log_res["items"][0]["emotional_tone"] == "positive"
+    print(f"✓ Digital Consumption Log passed (Tone: {log_res['items'][0]['emotional_tone']})")
+
+    # 8. Test Daily Intelligence Report
+    code, daily_rep = consumption.handle_get_daily_report({}, current_user)
+    assert code == 200
+    assert "emotional_distribution" in daily_rep
+    assert "ai_observations" in daily_rep
+    assert "something_to_notice" in daily_rep["ai_observations"]
+    print(f"✓ Daily Intelligence Report passed (Items: {daily_rep['total_items_analyzed']}, Time: {daily_rep['total_consumption_formatted']})")
+
+    # 9. Test Mood Check-in & Weekly Report
+    code, mood_res = consumption.handle_mood_checkin({
+        "mood": "calm",
+        "note": "Had a quiet evening after work."
+    }, current_user)
+    assert code == 200
+    assert mood_res["status"] == "success"
+
+    code, weekly_rep = consumption.handle_get_weekly_report({}, current_user)
+    assert code == 200
+    assert len(weekly_rep["timeline"]) == 7
+    print(f"✓ Weekly Intelligence Report & Mood Check-in passed (7 days timeline verified)")
+
     print("=" * 60)
-    print("ALL 6 BACKEND INTEGRATION TEST SUITES PASSED PERFECTLY!")
+    print("ALL 9 BACKEND INTEGRATION TEST SUITES PASSED PERFECTLY!")
     print("=" * 60)
 
 

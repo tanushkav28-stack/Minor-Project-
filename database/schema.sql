@@ -1,5 +1,5 @@
 -- ====================================================================
--- Cognivibe AI (MannSetu AI) Database Schema
+-- Cognivibe AI Database Schema
 -- Compatible with PostgreSQL 14+ and SQLite 3+
 -- ====================================================================
 

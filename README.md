@@ -1,5 +1,5 @@
-# Cognivibe AI (MannSetu AI) 🧠
-### A Context-Aware, Multitask AI System for Mental Health Language Analysis in Code-Mixed Social Media Content
+# Cognivibe AI 🧠
+### Mindful Language & Emotional Wellbeing Intelligence in Code-Mixed Social Media Content
 
 **Academic Level:** Final-Year B.Tech Major Project  
 **Target Platform:** Web Application + Chrome/Edge Browser Extension  
@@ -15,13 +15,17 @@ Most traditional sentiment and emotion detection systems fail on Indian social m
 Furthermore, analyzing single isolated sentences often leads to false positives (e.g. *"I am so tired"* after an exam).
 
 **Cognivibe AI solves both challenges:**
-1. **Browser Extension (Manifest V3):** Users can highlight any text or scan posts directly on **Reddit, Twitter/X, Instagram, and YouTube** without manual copy-pasting.
-2. **Multitask Neural Engine:** A shared encoder simultaneously predicts:
+1. **Browser Extension (Manifest V3):** Users can highlight any text or scan posts directly on **Reddit, Twitter/X, Instagram, and YouTube**, plus an **Auto-Track Content & Mood** engine that passively captures permitted visible text, titles, snippets, and active reading time without recording sensitive data.
+2. **AI Content Consumption & Mood Intelligence:**
+   - Multi-dimensional classification across **Emotional Tone** (+ Positive, = Neutral, − Negative, Mixed), **Intensity** (Low, Med, High), **Topics**, **Categories** (*News & current affairs, Entertainment, Education, Social media, Other*), and **Constructiveness** (*Informative, Supportive, Uplifting, Harmful*).
+   - Generates automated **Daily & Weekly Intelligence Reports** with emotional distributions, category screen time, and AI observations (*"Something to notice"*, *"A positive pattern"*).
+   - **Digital Consumption vs. Actual Mood Tracking:** Evening check-in (*"How did you feel today?"*) correlates self-reported mood (*Happy, Calm, Neutral, Stressed, Sad, Anxious*) against exposure to distressing news.
+3. **Multitask Neural Engine:** A shared encoder simultaneously predicts:
    - **Task 1: Emotion Classification** (7 classes: *Sadness, Anger, Joy, Fear, Neutral, Anxiety/Worry, Disgust*)
    - **Task 2: Depression-Related Language & Specific Linguistic Indicators** (*Loneliness, Hopelessness, Emotional Exhaustion, Negative Self-Perception, Loss of Interest, None*)
-3. **Context-Aware Sequential Aggregator:** Compares isolated remarks against historical trajectories across turns to separate temporary bad days from persistent chronic distress.
-4. **Full-Stack Research Dashboard:** React + TypeScript + Recharts dashboard with audit logs, trend charts, and downloadable PDF reports.
-5. **Ethical Crisis Intervention:** Automatic detection of crisis distress with immediate 24x7 confidential helpline referral (**Tele-MANAS: 14416 / 1800-891-4416, KIRAN: 1800-599-0019**).
+4. **Context-Aware Sequential Aggregator:** Compares isolated remarks against historical trajectories across turns to separate temporary bad days from persistent chronic distress.
+5. **Full-Stack Research Dashboard:** React + TypeScript + Recharts dashboard with audit logs, trend charts, and downloadable PDF reports.
+6. **Ethical Crisis Intervention:** Automatic detection of crisis distress with immediate 24x7 confidential helpline referral (**Tele-MANAS: 14416 / 1800-891-4416, KIRAN: 1800-599-0019**).
 
 ---
 
@@ -75,7 +79,7 @@ Open a second terminal window:
 ```bash
 cd frontend
 
-# Install frontend dependencies
+# Install frontend dependencies (if not already installed)
 npm install
 
 # Start the Vite development server
@@ -86,9 +90,9 @@ npm run dev
 👉 **`http://localhost:5173`**
 
 #### 🔑 Pre-seeded Demo Credentials:
-- **Email:** `demo@cognivibe.ai`
+- **Email:** `demo@aura.health` (or `demo@cognivibe.ai`)
 - **Password:** `password123`
-*(Or click "Auto-fill Demo Credentials" on the login screen for instant access!)*
+*(Or click "Auto-fill Demo Credentials" on the login screen for instant 1-click access!)*
 
 ---
 

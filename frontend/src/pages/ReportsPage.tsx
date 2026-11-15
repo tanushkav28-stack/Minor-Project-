@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { 
   FileText, 
-  FileDown, 
   Plus, 
   Calendar, 
-  Download, 
-  ExternalLink,
-  ShieldAlert
+  Download
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -53,10 +50,10 @@ export const ReportsPage: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-6">
-        <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
-          <FileText className="w-4 h-4" />
-          <span>Documentation & Exports</span>
+      <div className="border-b border-sky-100 pb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-xs font-bold text-sky-700 uppercase tracking-wider mb-1">
+          <FileText className="w-3.5 h-3.5 text-sky-600" />
+          <span>Cognivibe Documentation & Exports</span>
         </div>
         <h1 className="text-3xl font-black text-slate-900 mt-1">Research & Clinical Reports</h1>
         <p className="text-xs text-slate-500 mt-0.5">
@@ -65,7 +62,7 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {/* Generator Card */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+      <div className="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-sky-100 shadow-[0_4px_20px_-4px_rgba(14,165,233,0.08)] space-y-4">
         <h2 className="text-lg font-bold text-slate-900">Generate New Report</h2>
         <form onSubmit={handleGenerate} className="flex flex-col sm:flex-row gap-3">
           <input
@@ -74,12 +71,12 @@ export const ReportsPage: React.FC = () => {
             onChange={(e) => setReportTitle(e.target.value)}
             placeholder="Report Title..."
             required
-            className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+            className="flex-1 px-4 py-3 rounded-2xl border border-sky-200 text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-sky-50/20"
           />
           <button
             type="submit"
             disabled={generating}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-md transition-all disabled:opacity-50"
+            className="flex items-center justify-center gap-2 px-7 py-3 bg-gradient-to-r from-sky-500 via-sky-600 to-teal-500 hover:from-sky-600 hover:to-teal-600 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md shadow-sky-500/20 transition-all disabled:opacity-50 hover:scale-105 active:scale-95"
           >
             <Plus className="w-4 h-4" />
             <span>{generating ? 'Compiling Report...' : 'Generate Report'}</span>
@@ -92,24 +89,24 @@ export const ReportsPage: React.FC = () => {
         <h2 className="text-base font-bold text-slate-900">Previously Generated Reports</h2>
 
         {loading ? (
-          <div className="p-12 text-center text-xs text-slate-500">Loading reports...</div>
+          <div className="p-12 text-center text-xs text-sky-700 font-medium">Loading reports...</div>
         ) : reports.length === 0 ? (
-          <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center text-slate-500">
+          <div className="bg-white/90 backdrop-blur-md p-12 rounded-3xl border border-sky-100 text-center text-slate-500">
             <p className="font-semibold text-sm">No reports generated yet.</p>
             <p className="text-xs mt-1">Click "Generate Report" above to compile your language screening summary.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {reports.map((r) => (
-              <div key={r.report_id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:border-blue-300 transition-colors">
+              <div key={r.report_id} className="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-sky-100 shadow-[0_4px_20px_-4px_rgba(14,165,233,0.08)] flex flex-col justify-between space-y-4 hover:border-sky-300 transition-all">
                 <div>
                   <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-                    <span className="flex items-center gap-1 font-mono">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <span className="flex items-center gap-1 font-mono text-sky-800">
+                      <Calendar className="w-3.5 h-3.5 text-sky-600" />
                       {r.generated_at ? r.generated_at.substring(0, 16).replace('T', ' ') : 'N/A'}
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]">
-                      RESEARCH PDF READY
+                    <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 border border-sky-200 font-bold text-[10px]">
+                      COGNIVIBE PDF READY
                     </span>
                   </div>
                   <h3 className="font-extrabold text-slate-900 text-base">{r.title}</h3>
@@ -118,13 +115,13 @@ export const ReportsPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-3 border-t border-sky-100 flex items-center justify-between">
                   <span className="text-[11px] text-slate-400 font-mono">ID: {r.report_id}</span>
                   <button
                     onClick={() => handleOpenPrint(r.report_id)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-lg text-xs transition-colors"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 font-bold rounded-xl text-xs transition-colors"
                   >
-                    <Download className="w-3.5 h-3.5" />
+                    <Download className="w-3.5 h-3.5 text-sky-600" />
                     <span>View & Download PDF</span>
                   </button>
                 </div>
@@ -136,4 +133,3 @@ export const ReportsPage: React.FC = () => {
     </div>
   );
 };
-

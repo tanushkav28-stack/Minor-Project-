@@ -1,5 +1,5 @@
 """
-Cognivibe AI (MannSetu AI) - Code-Mixed Hinglish Preprocessing Pipeline
+Cognivibe AI - Code-Mixed Hinglish Preprocessing Pipeline
 Handles:
 1. Social media cleaning (handles, links, noise)
 2. Character elongation normalization (e.g. 'sooo' -> 'soo', 'bhooooot' -> 'bhoot')

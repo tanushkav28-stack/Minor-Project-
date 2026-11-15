@@ -3,81 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cognivibe AI Assistant</title>
+  <title>Cognivibe - Your Mindful Companion</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+  <!-- HEADER -->
   <div class="header">
     <div class="logo">
-      <span class="icon">🧠</span>
+      <span class="sparkle-icon">✦</span>
       <div>
-        <div class="title">Cognivibe AI</div>
-        <div class="subtitle">MannSetu Screening</div>
+        <div class="title">Cognivibe</div>
+        <div class="subtitle">Your mindful companion</div>
       </div>
     </div>
-    <div id="status-pill" class="status-pill offline">Checking...</div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab-btn active" id="tab-btn-analyze">Analyze</button>
-    <button class="tab-btn" id="tab-btn-settings">Settings</button>
-  </div>
-
-  <!-- TAB 1: ANALYZE -->
-  <div id="tab-analyze" class="tab-content active">
-    <div class="section-title">Manual / Quick Text Analysis</div>
-    <textarea id="input-text" placeholder="Paste Hinglish or English social post text here... e.g. 'Mujhe bhot akelapan feel hota h, kisi se baat karne ka mann nahi karta'"></textarea>
-    
-    <div class="btn-row">
-      <button id="btn-analyze" class="primary-btn">Analyze Language</button>
-      <button id="btn-scan-page" class="secondary-btn" title="Scan accessible posts on current social page">Scan Page</button>
-    </div>
-
-    <!-- Results Container -->
-    <div id="result-box" class="result-box" style="display: none;">
-      <div class="res-row">
-        <span class="res-label">Detected Emotion:</span>
-        <span id="res-emotion" class="badge">--</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label">Depression-Related:</span>
-        <span id="res-depression" class="badge">--</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label">Linguistic Indicator:</span>
-        <strong id="res-indicator">--</strong>
-      </div>
-      <div class="res-row">
-        <span class="res-label">Model Uncertainty:</span>
-        <span id="res-uncertainty">--</span>
-      </div>
-      <div id="res-cues" class="cues-box"></div>
-      <div id="res-helpline" class="helpline-box" style="display: none;"></div>
+    <div class="status-badge" id="status-pill">
+      <span class="status-dot"></span>
+      <span id="status-text">Protected</span>
     </div>
   </div>
 
-  <!-- TAB 2: SETTINGS -->
-  <div id="tab-settings" class="tab-content">
-    <div class="section-title">Extension Pairing</div>
-    <p class="help-text">Paste your personal Extension Token from the Cognivibe Web Dashboard to save your browsing analysis to your account.</p>
-    
-    <input type="text" id="token-input" placeholder="ext_..." />
-    <button id="btn-save-token" class="primary-btn" style="margin-top: 8px;">Pair Account</button>
-    <div id="pair-status" style="font-size: 11px; margin-top: 6px;"></div>
+  <!-- WARM INTRO -->
+  <div class="welcome-box">
+    <h1 class="welcome-title">Take a moment for yourself.</h1>
+    <p class="welcome-subtitle">Here's a little reflection on your digital day.</p>
+  </div>
 
-    <div style="margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
-      <label class="toggle-row">
-        <span>Enable On-Page Scanner</span>
-        <input type="checkbox" id="toggle-scanner" checked>
-      </label>
+  <!-- TODAY'S DIGITAL BALANCE CARD -->
+  <div class="sanctuary-card">
+    <div class="card-label">TODAY'S DIGITAL BALANCE</div>
+    <div class="kpi-row">
+      <div class="kpi-main" id="wb-time">4h 39m</div>
+      <div class="kpi-sub" id="wb-items">145 items analysed</div>
+    </div>
+
+    <!-- Segmented horizontal bar -->
+    <div class="balance-bar-container">
+      <div id="wb-bar-pos" class="balance-seg pos" style="width: 32%;"></div>
+      <div id="wb-bar-neu" class="balance-seg neu" style="width: 44%;"></div>
+      <div id="wb-bar-neg" class="balance-seg neg" style="width: 24%;"></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="balance-legend">
+      <span class="legend-item"><span class="dot pos"></span> Positive <strong id="wb-pos-pct">32%</strong></span>
+      <span class="legend-item"><span class="dot neu"></span> Neutral <strong id="wb-neu-pct">44%</strong></span>
+      <span class="legend-item"><span class="dot neg"></span> Distressing <strong id="wb-neg-pct">24%</strong></span>
     </div>
   </div>
 
-  <div class="footer">
-    <a href="http://localhost:5173" target="_blank" class="footer-link">Open Full Web Dashboard ↗</a>
+  <!-- MOOD CHECK-IN (3 Simple Friendly Options) -->
+  <div class="sanctuary-card">
+    <div class="section-title">How are you feeling today?</div>
+    <div class="mood-row">
+      <button class="mood-btn" data-mood="happy">
+        <span class="emoji">😊</span>
+        <span class="lbl">Happy</span>
+      </button>
+      <button class="mood-btn" data-mood="calm">
+        <span class="emoji">😌</span>
+        <span class="lbl">Calm</span>
+      </button>
+      <button class="mood-btn" data-mood="neutral">
+        <span class="emoji">😐</span>
+        <span class="lbl">Neutral</span>
+      </button>
+    </div>
+    <div id="mood-feedback" class="mood-feedback" style="display: none;"></div>
+  </div>
+
+  <!-- A MOMENT TO BREATHE (Mindful Action) -->
+  <div class="sanctuary-card breathe-card">
+    <div class="breathe-header">
+      <span class="breathe-icon">🌿</span>
+      <span class="breathe-title">A moment to breathe</span>
+    </div>
+    <p class="breathe-desc">
+      Step away from the screen. Relax your shoulders and take a slow breath.
+    </p>
+    <button id="btn-popup-breathe" class="breathe-action-btn">
+      Begin breathing exercise (30s)
+    </button>
+  </div>
+
+  <!-- FOOTER QUOTE & SANCTUARY LINK -->
+  <div class="popup-footer">
+    <p class="footer-quote">Your wellbeing matters. One moment at a time.</p>
+    <div class="footer-nav">
+      <a href="http://localhost:5173" target="_blank" class="footer-link">Open Full Sanctuary ↗</a>
+      <span class="footer-sep">•</span>
+      <button id="btn-toggle-settings" class="footer-text-btn">Settings</button>
+      <span class="footer-sep">•</span>
+      <button id="btn-popup-shield-test" class="footer-text-btn" title="Simulate 20m shield alert">Test Shield</button>
+    </div>
+
+    <!-- Hidden Settings Panel (Toggled on click) -->
+    <div id="settings-panel" style="display: none; margin-top: 10px; padding: 10px; background: #E9F0E7; border-radius: 12px; text-align: left; font-size: 11px;">
+      <div style="font-weight: 700; color: #244B43; margin-bottom: 6px;">Pair Extension Token:</div>
+      <input type="text" id="token-input" placeholder="ext_..." style="width: 100%; box-sizing: border-box; padding: 6px; border: 1px solid #A9C4B2; border-radius: 8px; font-size: 11px; margin-bottom: 6px;" />
+      <button id="btn-save-token" style="width: 100%; padding: 6px; background: #244B43; color: #F8F6F0; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">Save Token</button>
+      <div id="pair-status" style="font-size: 10px; margin-top: 4px; color: #244B43;"></div>
+    </div>
   </div>
 
   <script src="popup.js"></script>
 </body>
 </html>
-

@@ -1,5 +1,5 @@
 """
-Cognivibe AI (MannSetu AI) - Real-Time Inference Engine
+Cognivibe AI - Real-Time Inference Engine
 Handles:
 1. Code-mixed Hinglish text normalization
 2. Multitask inference (Emotion + Depression Language + Specific Indicator)

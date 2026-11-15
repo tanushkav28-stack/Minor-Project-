@@ -73,22 +73,22 @@ export const HistoryPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-sky-100 pb-6">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider">
-            <History className="w-4 h-4" />
-            <span>Audit Trail & Records</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-xs font-bold text-sky-700 uppercase tracking-wider mb-1">
+            <History className="w-3.5 h-3.5 text-sky-600" />
+            <span>Cognivibe AI Audit Trail & Records</span>
           </div>
           <h1 className="text-3xl font-black text-slate-900 mt-1">Analysis History</h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Historical logs of Hinglish posts analyzed via the Chrome extension or web application
+            Historical logs of Hinglish posts analyzed via the Cognivibe extension or web application
           </p>
         </div>
 
         {history.length > 0 && (
           <button
             onClick={handleClearAll}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-2xl text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear All History</span>
@@ -99,20 +99,20 @@ export const HistoryPage: React.FC = () => {
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+          <Search className="w-4 h-4 text-sky-600 absolute left-3.5 top-3.5" />
           <input
             type="text"
             placeholder="Search within analyzed texts or detected emotions..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-sky-200 text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-white/90"
           />
         </div>
 
         <select
           value={filterEmotion}
           onChange={(e) => setFilterEmotion(e.target.value)}
-          className="px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white text-slate-700 font-medium focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+          className="px-4 py-2.5 rounded-2xl border border-sky-200 text-sm bg-white/90 text-slate-700 font-medium focus:ring-2 focus:ring-sky-500 focus:border-transparent"
         >
           <option value="ALL">All Emotions</option>
           <option value="Sadness">Sadness</option>
@@ -126,7 +126,7 @@ export const HistoryPage: React.FC = () => {
       </div>
 
       {/* Records Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white/90 backdrop-blur-md rounded-3xl border border-sky-100 shadow-[0_4px_20px_-4px_rgba(14,165,233,0.08)] overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-xs text-slate-500">Loading history records...</div>
         ) : filtered.length === 0 ? (
@@ -137,7 +137,7 @@ export const HistoryPage: React.FC = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
+              <thead className="bg-sky-50/70 border-b border-sky-100 text-sky-900 font-bold uppercase tracking-wider text-[11px]">
                 <tr>
                   <th className="py-3.5 px-4">Date & Time</th>
                   <th className="py-3.5 px-4">Platform Source</th>

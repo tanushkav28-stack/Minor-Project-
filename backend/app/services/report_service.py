@@ -47,23 +47,23 @@ def generate_html_report(user: Dict[str, Any], summary: Dict[str, Any], history:
         line-height: 1.5;
     }}
     .header {{
-        border-bottom: 2px solid #3b82f6;
+        border-bottom: 2px solid #0ea5e9;
         padding-bottom: 20px;
         margin-bottom: 25px;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
     }}
-    .title {{ font-size: 26px; font-weight: 800; color: #1e3a8a; margin: 0; }}
+    .title {{ font-size: 26px; font-weight: 800; color: #0369a1; margin: 0; }}
     .subtitle {{ font-size: 14px; color: #64748b; margin-top: 5px; }}
     .badge {{
-        background: #eff6ff;
-        color: #2563eb;
+        background: #f0f9ff;
+        color: #0284c7;
         padding: 6px 12px;
         border-radius: 9999px;
         font-size: 12px;
         font-weight: 600;
-        border: 1px solid #bfdbfe;
+        border: 1px solid #bae6fd;
     }}
     .summary-grid {{
         display: grid;
@@ -80,10 +80,10 @@ def generate_html_report(user: Dict[str, Any], summary: Dict[str, Any], history:
     }}
     .card-val {{ font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 4px; }}
     .card-label {{ font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }}
-    h2 {{ font-size: 18px; color: #1e293b; margin-top: 30px; margin-bottom: 12px; border-left: 4px solid #3b82f6; padding-left: 10px; }}
+    h2 {{ font-size: 18px; color: #1e293b; margin-top: 30px; margin-bottom: 12px; border-left: 4px solid #0ea5e9; padding-left: 10px; }}
     table {{ width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 13px; }}
     th, td {{ padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }}
-    th {{ background: #f1f5f9; color: #475569; font-weight: 600; }}
+    th {{ background: #f0f9ff; color: #0369a1; font-weight: 600; }}
     .disclaimer-box {{
         background: #fffbeb;
         border: 1px solid #fef3c7;
@@ -95,12 +95,12 @@ def generate_html_report(user: Dict[str, Any], summary: Dict[str, Any], history:
         color: #92400e;
     }}
     .print-btn {{
-        background: #2563eb;
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
         color: white;
         border: none;
         padding: 10px 20px;
         font-weight: 600;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
         margin-bottom: 20px;
     }}
@@ -115,8 +115,8 @@ def generate_html_report(user: Dict[str, Any], summary: Dict[str, Any], history:
 
     <div class="header">
         <div>
-            <h1 class="title">Cognivibe AI (MannSetu)</h1>
-            <div class="subtitle">Mental Health Language Pattern & Emotion Screening Report</div>
+            <h1 class="title">Cognivibe AI</h1>
+            <div class="subtitle">Mindful Language Pattern & Emotional Wellbeing Screening Report</div>
         </div>
         <div style="text-align: right;">
             <span class="badge">Research Screening Report</span>

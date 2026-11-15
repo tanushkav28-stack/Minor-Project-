@@ -1,5 +1,5 @@
 """
-Comprehensive Dataset Generator for Cognivibe AI / MannSetu AI.
+Comprehensive Dataset Generator for Cognivibe AI.
 Creates 210 annotated samples covering all 7 emotions and 5 depression indicators,
 with diverse Hinglish slang, Romanized Hindi, and English patterns.
 """

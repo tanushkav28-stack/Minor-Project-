@@ -1,4 +1,4 @@
-# Cognivibe AI (MannSetu AI) - Final Project Report & PPT Outline
+# Cognivibe AI - Final Project Report & PPT Outline
 ### Major Project Academic Submission Guide
 
 ---
@@ -50,7 +50,7 @@
 
 ## 2. Final Year Project Presentation (PPT) Slide Outline
 
-- **Slide 1:** Title, Project Name (*Cognivibe AI / MannSetu AI*), Team Members & Supervisor.
+- **Slide 1:** Title, Project Name (*Cognivibe AI*), Team Members & Supervisor.
 - **Slide 2:** Motivation & Problem Statement (Hinglish expressions and OOV failure in standard models).
 - **Slide 3:** Proposed Solution (Full-Stack Browser Extension + Multitask NLP Engine).
 - **Slide 4:** System Architecture Diagram.

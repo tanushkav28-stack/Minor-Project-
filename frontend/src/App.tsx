@@ -11,6 +11,7 @@ import { AnalysisPage } from './pages/AnalysisPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { DigitalConsumptionPage } from './pages/DigitalConsumptionPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -31,7 +32,7 @@ export const App: React.FC = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+        <div className="min-h-screen flex flex-col bg-[#F8F6F0] text-[#244B43]">
           <Navbar />
           <main className="flex-1">
             <Routes>
@@ -40,6 +41,7 @@ export const App: React.FC = () => {
               <Route path="/register" element={<RegisterPage />} />
               
               <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+              <Route path="/consumption" element={<ProtectedRoute><DigitalConsumptionPage /></ProtectedRoute>} />
               <Route path="/analyze" element={<ProtectedRoute><AnalysisPage /></ProtectedRoute>} />
               <Route path="/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
               <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
