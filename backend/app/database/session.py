@@ -310,6 +310,34 @@ class DatabaseService:
             reports.append(d)
         return reports
 
+    @staticmethod
+    def get_report_by_id(report_id: str, user_id: str) -> Optional[Dict[str, Any]]:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT report_id, user_id, title, report_type, generated_at, summary_json FROM reports WHERE report_id = ? AND user_id = ?",
+            (report_id, user_id)
+        )
+        row = cursor.fetchone()
+        conn.close()
+        if not row:
+            return None
+        d = dict(row)
+        try:
+            d["summary_data"] = json.loads(d.get("summary_json", "{}"))
+        except Exception:
+            d["summary_data"] = {}
+        return d
+
+    @staticmethod
+    def delete_report(report_id: str, user_id: str) -> bool:
+        conn = get_db_connection()
+        with conn:
+            cursor = conn.execute("DELETE FROM reports WHERE report_id = ? AND user_id = ?", (report_id, user_id))
+            deleted = cursor.rowcount > 0
+        conn.close()
+        return deleted
+
     # ------------------ DIGITAL CONSUMPTION & MOOD INTELLIGENCE ------------------
     @staticmethod
     def save_consumption_log(user_id: str, data: Dict[str, Any]) -> str:

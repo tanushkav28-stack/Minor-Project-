@@ -21,6 +21,7 @@ import {
   Wind
 } from 'lucide-react';
 import { BreathingModal } from '../components/BreathingModal';
+import { MoodVisualizations } from '../components/MoodVisualizations';
 import { 
   PieChart, 
   Pie, 
@@ -63,6 +64,7 @@ export const DigitalConsumptionPage: React.FC = () => {
   
   const [dailyData, setDailyData] = useState<DailyReportResponse | null>(null);
   const [weeklyData, setWeeklyData] = useState<WeeklyReportResponse | null>(null);
+  const [moodHistory, setMoodHistory] = useState<MoodCheckin[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -85,9 +87,11 @@ export const DigitalConsumptionPage: React.FC = () => {
   const loadData = async (dateStr: string) => {
     try {
       setLoading(true);
+      const moodPromise = api.getMoodHistory(30).catch(() => ({ history: [] }));
       if (viewMode === 'daily') {
-        const data = await api.getDailyReport(dateStr);
+        const [data, moodRes] = await Promise.all([api.getDailyReport(dateStr), moodPromise]);
         setDailyData(data);
+        setMoodHistory(moodRes.history || []);
         if (data.mood_checkin) {
           setSelectedMood(data.mood_checkin.mood);
           setMoodNote(data.mood_checkin.note || '');
@@ -96,8 +100,9 @@ export const DigitalConsumptionPage: React.FC = () => {
           setMoodNote('');
         }
       } else {
-        const data = await api.getWeeklyReport(undefined, dateStr);
+        const [data, moodRes] = await Promise.all([api.getWeeklyReport(undefined, dateStr), moodPromise]);
         setWeeklyData(data);
+        setMoodHistory(moodRes.history || []);
       }
     } catch (err) {
       console.error(err);
@@ -124,9 +129,13 @@ export const DigitalConsumptionPage: React.FC = () => {
       });
       setMoodSavedMsg('Mood check-in recorded! Re-evaluating consumption correlation...');
       setTimeout(() => setMoodSavedMsg(''), 4000);
-      // Reload daily data to refresh correlation insight
-      const updated = await api.getDailyReport(selectedDate);
+      // Reload mood history after checkin
+      const [updated, moodRes] = await Promise.all([
+        api.getDailyReport(selectedDate),
+        api.getMoodHistory(30).catch(() => ({ history: [] }))
+      ]);
       setDailyData(updated);
+      setMoodHistory(moodRes.history || []);
     } catch (err: any) {
       alert(err.message || 'Failed to submit mood check-in');
     } finally {
@@ -826,6 +835,16 @@ export const DigitalConsumptionPage: React.FC = () => {
 
         </div>
       ) : null}
+
+      {/* MOOD INTELLIGENCE VISUALIZATIONS */}
+      {!loading && (
+        <MoodVisualizations
+          moodHistory={moodHistory}
+          positivePct={dailyData?.emotional_distribution.positive_pct ?? weeklyData?.weekly_distribution.positive_pct ?? 32.4}
+          neutralPct={dailyData?.emotional_distribution.neutral_pct ?? weeklyData?.weekly_distribution.neutral_pct ?? 43.4}
+          negativePct={dailyData?.emotional_distribution.negative_pct ?? weeklyData?.weekly_distribution.negative_pct ?? 24.1}
+        />
+      )}
 
       {/* Cognivibe Doomscrolling Shield 30s Breathing Modal */}
       <BreathingModal

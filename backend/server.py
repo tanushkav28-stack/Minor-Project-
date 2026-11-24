@@ -257,6 +257,11 @@ class CognivibeRequestHandler(BaseHTTPRequestHandler):
             code, res = users_routes.handle_delete_account(user)
             return self._send_json_response(code, res)
 
+        elif re.match(r"^/api/reports/([^/]+)$", path):
+            report_id = re.match(r"^/api/reports/([^/]+)$", path).group(1)
+            code, res = reports_routes.handle_delete_report(report_id, user)
+            return self._send_json_response(code, res)
+
         elif path == "/api/consumption/clear":
             code, res = consumption_routes.handle_clear_consumption(user)
             return self._send_json_response(code, res)

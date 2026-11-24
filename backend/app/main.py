@@ -162,8 +162,15 @@ try:
     async def download_report(report_id: str, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
         code, html = reports_routes.handle_download_report(report_id, user)
         if code >= 400:
-            raise HTTPException(status_code=code, detail="Report generation failed.")
+            raise HTTPException(status_code=code, detail=html or "Report generation failed.")
         return HTMLResponse(content=html)
+
+    @app.delete("/api/reports/{report_id}")
+    async def delete_report(report_id: str, user: Optional[Dict[str, Any]] = Depends(get_current_user)):
+        code, res = reports_routes.handle_delete_report(report_id, user)
+        if code >= 400:
+            raise HTTPException(status_code=code, detail=res.get("detail", "Error"))
+        return res
 
     # Extension routes
     @app.post("/api/extension/connect")

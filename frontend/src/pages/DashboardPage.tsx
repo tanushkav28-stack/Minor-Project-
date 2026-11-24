@@ -27,9 +27,10 @@ import {
   FileDown
 } from 'lucide-react';
 import { api } from '../services/api';
-import { DashboardSummary } from '../types';
+import { DashboardSummary, DailyReportResponse, MoodCheckin } from '../types';
 import { BreathingModal } from '../components/BreathingModal';
 import { JournalModal } from '../components/JournalModal';
+import { MoodVisualizations } from '../components/MoodVisualizations';
 
 // Emotional Tone Colors for the Sanctuary Palette
 const TONE_COLORS = {
@@ -42,6 +43,8 @@ export const DashboardPage: React.FC = () => {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [trends, setTrends] = useState<any[]>([]);
   const [benchmarks, setBenchmarks] = useState<any | null>(null);
+  const [moodHistory, setMoodHistory] = useState<MoodCheckin[]>([]);
+  const [dailyReport, setDailyReport] = useState<DailyReportResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Sanctuary Modals
@@ -49,25 +52,43 @@ export const DashboardPage: React.FC = () => {
   const [isJournalOpen, setIsJournalOpen] = useState(false);
   const [isBenchmarksExpanded, setIsBenchmarksExpanded] = useState(false);
 
-  useEffect(() => {
-    async function loadDashboard() {
-      try {
-        const [sumData, trendData, benchData] = await Promise.all([
-          api.getDashboardSummary(),
-          api.getDashboardTrends(14),
-          api.getBenchmarks()
-        ]);
-        setSummary(sumData);
-        setTrends(trendData.timeline || []);
-        setBenchmarks(benchData);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+  const loadDashboard = async () => {
+    try {
+      const [sumData, trendData, benchData, moodData, dailyData] = await Promise.all([
+        api.getDashboardSummary(),
+        api.getDashboardTrends(14),
+        api.getBenchmarks(),
+        api.getMoodHistory(30).catch(() => ({ history: [] })),
+        api.getDailyReport().catch(() => null)
+      ]);
+      setSummary(sumData);
+      setTrends(trendData.timeline || []);
+      setBenchmarks(benchData);
+      setMoodHistory(moodData.history || []);
+      setDailyReport(dailyData);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     loadDashboard();
   }, []);
+
+  const handleQuickMoodLog = async (mood: string) => {
+    await api.recordMoodCheckin({
+      mood,
+      note: 'Quick check-in from Sanctuary Dashboard'
+    });
+    const [moodData, dailyData] = await Promise.all([
+      api.getMoodHistory(30).catch(() => ({ history: [] })),
+      api.getDailyReport().catch(() => null)
+    ]);
+    setMoodHistory(moodData.history || []);
+    if (dailyData) setDailyReport(dailyData);
+  };
 
   if (loading) {
     return (
@@ -82,10 +103,10 @@ export const DashboardPage: React.FC = () => {
 
   // Smooth line chart trajectory data
   const trajectoryData = trends.length > 0
-    ? trends.map((t, idx) => ({
-        day: `Day ${idx + 1}`,
-        positive: Math.round((t.positive_count || 1) * 15 + 20),
-        sensitive: Math.round((t.depression_count || 0) * 10 + 10),
+    ? trends.map((t) => ({
+        day: (t.date || '').slice(5) || 'Day',
+        positive: Math.round((t.joy_signals || 0) * 18 + 24),
+        sensitive: Math.round(((t.depression_signals || 0) + (t.sadness_signals || 0) + (t.anxiety_signals || 0)) * 12 + 8),
       }))
     : [
         { day: 'Mon', positive: 35, sensitive: 20 },
@@ -96,6 +117,25 @@ export const DashboardPage: React.FC = () => {
         { day: 'Sat', positive: 65, sensitive: 8 },
         { day: 'Sun', positive: 60, sensitive: 11 },
       ];
+
+  const latestMoodEntry = moodHistory[0] || dailyReport?.mood_checkin;
+  const moodEmojiMap: Record<string, string> = {
+    happy: '😊',
+    calm: '😌',
+    neutral: '😐',
+    stressed: '😫',
+    anxious: '😰',
+    sad: '😢'
+  };
+  const positivePct = dailyReport && dailyReport.total_items_analyzed > 0
+    ? dailyReport.emotional_distribution.positive_pct
+    : 32.4;
+  const neutralPct = dailyReport && dailyReport.total_items_analyzed > 0
+    ? dailyReport.emotional_distribution.neutral_pct
+    : 43.4;
+  const negativePct = dailyReport && dailyReport.total_items_analyzed > 0
+    ? dailyReport.emotional_distribution.negative_pct
+    : 24.1;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
@@ -233,14 +273,27 @@ export const DashboardPage: React.FC = () => {
                 <Smile className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-3xl font-black text-[#244B43] flex items-center gap-2">
-              <span>Calm</span>
-              <span className="text-base">😌</span>
+            <div className="text-3xl font-black text-[#244B43] flex items-center gap-2 capitalize">
+              <span>{latestMoodEntry ? latestMoodEntry.mood : 'Calm'}</span>
+              <span className="text-base">{latestMoodEntry ? (moodEmojiMap[latestMoodEntry.mood] || '😌') : '😌'}</span>
             </div>
-            <p className="text-[11px] text-[#244B43]/75 font-medium">Your latest check-in</p>
+            <p className="text-[11px] text-[#244B43]/75 font-medium">
+              {latestMoodEntry ? `Check-in: ${latestMoodEntry.checkin_date}` : 'Your latest check-in'}
+            </p>
           </div>
         </div>
       </section>
+
+      {/* =========================================================================
+          B2. MOOD ANALYTICS & VISUALIZATIONS
+          ========================================================================= */}
+      <MoodVisualizations
+        moodHistory={moodHistory}
+        positivePct={positivePct}
+        neutralPct={neutralPct}
+        negativePct={negativePct}
+        onQuickMoodLog={handleQuickMoodLog}
+      />
 
       {/* =========================================================================
           C. EMOTIONAL INSIGHTS & LANDSCAPE

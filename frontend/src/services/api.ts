@@ -119,7 +119,10 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(payload)
     });
-    if (!res.ok) throw new Error('Failed to generate report');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to generate report');
+    }
     return res.json();
   },
 
@@ -128,6 +131,29 @@ export const api = {
       headers: getAuthHeaders()
     });
     if (!res.ok) throw new Error('Failed to list reports');
+    return res.json();
+  },
+
+  async downloadReportHtml(reportId: string): Promise<string> {
+    const res = await fetch(`${API_BASE}/reports/${reportId}/download`, {
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to load report content');
+    }
+    return res.text();
+  },
+
+  async deleteReport(reportId: string) {
+    const res = await fetch(`${API_BASE}/reports/${reportId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to delete report');
+    }
     return res.json();
   },
 
@@ -190,6 +216,14 @@ export const api = {
       body: JSON.stringify(payload)
     });
     if (!res.ok) throw new Error('Failed to record mood check-in');
+    return res.json();
+  },
+
+  async getMoodHistory(days = 30) {
+    const res = await fetch(`${API_BASE}/consumption/mood-history?days=${days}`, {
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) throw new Error('Failed to fetch mood history');
     return res.json();
   },
 
